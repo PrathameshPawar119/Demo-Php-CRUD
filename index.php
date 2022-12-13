@@ -162,6 +162,26 @@
             }
         });
     }
+
+    function deleteRecord(e){
+        var stuId = e.target.getAttribute("data-studentId");
+        var ask1 = confirm("Are you sure to delete record no."+stuId);
+        if (ask1) {
+            $.ajax({
+                url: "elements/deleteRecord.php",
+                type: "POST",
+                data: {studentId: stuId},
+                success: function(result){
+                    if (result == '1' || result == 1) {
+                        getStudentsTableAjax();
+                    }
+                    else{
+                        alert("Some Problem occured while deleting!");
+                    }
+                }
+            })
+        }
+    }
     
     $(document).ready(function(){
         getStudentsTableAjax();
@@ -182,23 +202,7 @@
         });
 
         $(document).on("click", ".deleteBtnSm", function (e){
-            var stuId = e.target.getAttribute("data-studentId");
-            var ask1 = confirm("Are you sure to delete record no."+stuId);
-            if (ask1) {
-                $.ajax({
-                    url: "elements/deleteRecord.php",
-                    type: "POST",
-                    data: {studentId: stuId},
-                    success: function(result){
-                        if (result == '1' || result == 1) {
-                            getStudentsTableAjax();
-                        }
-                        else{
-                            alert("Some Problem occured while deleting!");
-                        }
-                    }
-                })
-            }
+            deleteRecord(e);
         });
 
 
